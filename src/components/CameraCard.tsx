@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Camera, CameraStatus } from '@/context/CameraContext';
+import { Camera as CameraType, CameraStatus } from '@/context/CameraContext';
 import { connectToStream, disconnectFromStream } from '@/utils/webrtc';
 import { 
   Play, 
@@ -11,13 +11,14 @@ import {
   Maximize, 
   RefreshCw, 
   MapPin, 
-  Clock 
+  Clock,
+  Camera as CameraIcon
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { cn } from '@/lib/utils';
 
 interface CameraCardProps {
-  camera: Camera;
+  camera: CameraType;
   isFullscreenable?: boolean;
   onFullscreen?: () => void;
 }
@@ -138,7 +139,7 @@ export function CameraCard({ camera, isFullscreenable = true, onFullscreen }: Ca
           
           {!isPlaying && !isLoading && (
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white bg-gray-800">
-              <Camera size={40} className="mb-2 opacity-40" />
+              <CameraIcon size={40} className="mb-2 opacity-40" />
               <p className="text-sm opacity-60">Stream not active</p>
             </div>
           )}

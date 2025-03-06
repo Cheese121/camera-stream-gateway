@@ -14,6 +14,7 @@ interface AddCameraModalProps {
   onClose: () => void;
 }
 
+// Define a schema that ensures required fields match what the API expects
 const cameraSchema = z.object({
   name: z.string().min(1, 'Camera name is required'),
   rtspUrl: z.string().url('Must be a valid URL').min(1, 'RTSP URL is required'),
@@ -35,7 +36,12 @@ export function AddCameraModal({ isOpen, onClose }: AddCameraModalProps) {
 
   const onSubmit = async (data: CameraFormData) => {
     try {
-      await addNewCamera(data);
+      // Ensure we only submit when we have the required fields (name and rtspUrl are required by the schema)
+      await addNewCamera({
+        name: data.name,
+        rtspUrl: data.rtspUrl,
+        location: data.location,
+      });
       reset();
       onClose();
     } catch (error) {
